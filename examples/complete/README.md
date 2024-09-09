@@ -49,20 +49,20 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.57.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.66.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_resource_names"></a> [resource\_names](#module\_resource\_names) | git::https://github.com/nexient-llc/tf-module-resource_name.git | 0.1.0 |
+| <a name="module_resource_names"></a> [resource\_names](#module\_resource\_names) | terraform.registry.launch.nttdata.com/module_library/resource_name/launch | ~> 1.0 |
 | <a name="module_cloudwatch_log_subscription_filter"></a> [cloudwatch\_log\_subscription\_filter](#module\_cloudwatch\_log\_subscription\_filter) | ../.. | n/a |
-| <a name="module_cloudwatch_log_group"></a> [cloudwatch\_log\_group](#module\_cloudwatch\_log\_group) | git::https://github.com/nexient-llc/tf-aws-module-cloudwatch_log_group | 0.1.0 |
-| <a name="module_cloudwatch_log_stream"></a> [cloudwatch\_log\_stream](#module\_cloudwatch\_log\_stream) | git::https://github.com/nexient-llc/tf-aws-module-cloudwatch_log_stream | 0.1.0 |
-| <a name="module_firehose_delivery_stream"></a> [firehose\_delivery\_stream](#module\_firehose\_delivery\_stream) | git::https://github.com/nexient-llc/tf-aws-module-firehose_delivery_stream | 0.1.0 |
-| <a name="module_s3_bucket"></a> [s3\_bucket](#module\_s3\_bucket) | git::https://github.com/nexient-llc/tf-aws-wrapper_module-s3_bucket | 0.1.0 |
-| <a name="module_producer_role"></a> [producer\_role](#module\_producer\_role) | git::https://github.com/nexient-llc/tf-aws-wrapper_module-iam_assumable_role.git | 0.1.0 |
-| <a name="module_consumer_role"></a> [consumer\_role](#module\_consumer\_role) | git::https://github.com/nexient-llc/tf-aws-wrapper_module-iam_assumable_role.git | 0.1.0 |
+| <a name="module_cloudwatch_log_group"></a> [cloudwatch\_log\_group](#module\_cloudwatch\_log\_group) | git::https://github.com/launchbynttdata/tf-aws-module_primitive-cloudwatch_log_group | 1.0.1 |
+| <a name="module_cloudwatch_log_stream"></a> [cloudwatch\_log\_stream](#module\_cloudwatch\_log\_stream) | git::https://github.com/launchbynttdata/tf-aws-module_primitive-cloudwatch_log_stream | 1.0.1 |
+| <a name="module_firehose_delivery_stream"></a> [firehose\_delivery\_stream](#module\_firehose\_delivery\_stream) | git::https://github.com/launchbynttdata/tf-aws-module_primitive-firehose_delivery_stream | 1.1.0 |
+| <a name="module_s3_bucket"></a> [s3\_bucket](#module\_s3\_bucket) | git::https://github.com/launchbynttdata/tf-aws-module_collection-s3_bucket | 1.0.0 |
+| <a name="module_producer_role"></a> [producer\_role](#module\_producer\_role) | git::https://github.com/launchbynttdata/tf-aws-module_collection-iam_assumable_role | 1.0.1 |
+| <a name="module_consumer_role"></a> [consumer\_role](#module\_consumer\_role) | git::https://github.com/launchbynttdata/tf-aws-module_collection-iam_assumable_role | 1.0.1 |
 
 ## Resources
 
@@ -76,7 +76,8 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_naming_prefix"></a> [naming\_prefix](#input\_naming\_prefix) | Prefix for the provisioned resources. | `string` | `"platform"` | no |
+| <a name="input_logical_product_family"></a> [logical\_product\_family](#input\_logical\_product\_family) | (Required) Name of the product family for which the resource is created.<br>    Example: org\_name, department\_name. | `string` | `"launch"` | no |
+| <a name="input_logical_product_service"></a> [logical\_product\_service](#input\_logical\_product\_service) | (Required) Name of the product service for which the resource is created.<br>    For example, backend, frontend, middleware etc. | `string` | `"backend"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment in which the resource should be provisioned like dev, qa, prod etc. | `string` | `"dev"` | no |
 | <a name="input_environment_number"></a> [environment\_number](#input\_environment\_number) | The environment count for the respective environment. Defaults to 000. Increments in value of 1 | `string` | `"000"` | no |
 | <a name="input_resource_number"></a> [resource\_number](#input\_resource\_number) | The resource count for the respective resource. Defaults to 000. Increments in value of 1 | `string` | `"000"` | no |

@@ -13,17 +13,19 @@
 data "aws_caller_identity" "current" {}
 
 module "resource_names" {
-  source = "git::https://github.com/nexient-llc/tf-module-resource_name.git?ref=0.1.0"
+  source  = "terraform.registry.launch.nttdata.com/module_library/resource_name/launch"
+  version = "~> 1.0"
 
   for_each = var.resource_names_map
 
-  logical_product_name = var.naming_prefix
-  region               = join("", split("-", var.region))
-  class_env            = var.environment
-  cloud_resource_type  = each.value.name
-  instance_env         = var.environment_number
-  instance_resource    = var.resource_number
-  maximum_length       = each.value.max_length
+  logical_product_family  = var.logical_product_family
+  logical_product_service = var.logical_product_service
+  region                  = join("", split("-", var.region))
+  class_env               = var.environment
+  cloud_resource_type     = each.value.name
+  instance_env            = var.environment_number
+  instance_resource       = var.resource_number
+  maximum_length          = each.value.max_length
 }
 
 module "cloudwatch_log_subscription_filter" {
@@ -32,17 +34,17 @@ module "cloudwatch_log_subscription_filter" {
   subscription_filter_name                = module.resource_names["subscription_filter"].standard
   subscription_filter_role_arn            = module.producer_role.assumable_iam_role
   cloudwatch_log_group_name               = module.resource_names["log_group"].standard
-  subscription_filter_delivery_stream_arn = module.firehose_delivery_stream.delivery_stream_arn
+  subscription_filter_delivery_stream_arn = module.firehose_delivery_stream.arn
 }
 
 module "cloudwatch_log_group" {
-  source = "git::https://github.com/nexient-llc/tf-aws-module-cloudwatch_log_group?ref=0.1.0"
+  source = "git::https://github.com/launchbynttdata/tf-aws-module_primitive-cloudwatch_log_group?ref=1.0.1"
 
   name = module.resource_names["log_group"].standard
 }
 
 module "cloudwatch_log_stream" {
-  source = "git::https://github.com/nexient-llc/tf-aws-module-cloudwatch_log_stream?ref=0.1.0"
+  source = "git::https://github.com/launchbynttdata/tf-aws-module_primitive-cloudwatch_log_stream?ref=1.0.1"
 
   name                      = module.resource_names["log_stream"].standard
   cloudwatch_log_group_name = module.resource_names["log_group"].standard
@@ -50,30 +52,27 @@ module "cloudwatch_log_stream" {
 }
 
 module "firehose_delivery_stream" {
-  source = "git::https://github.com/nexient-llc/tf-aws-module-firehose_delivery_stream?ref=0.1.0"
+  source = "git::https://github.com/launchbynttdata/tf-aws-module_primitive-firehose_delivery_stream?ref=1.1.0"
 
   delivery_stream_name   = module.resource_names["delivery_stream"].standard
   http_endpoint_url      = var.http_endpoint_url
   http_endpoint_name     = var.http_endpoint_name
   s3_error_output_prefix = var.s3_error_prefix
   s3_endpoint_bucket_arn = module.s3_bucket.arn
-  producer_role_arn      = module.producer_role.assumable_iam_role
   consumer_role_arn      = module.consumer_role.assumable_iam_role
 
   tags = { resource_name = module.resource_names["delivery_stream"].standard }
 }
 
 module "s3_bucket" {
-  source = "git::https://github.com/nexient-llc/tf-aws-wrapper_module-s3_bucket?ref=0.1.0"
+  source = "git::https://github.com/launchbynttdata/tf-aws-module_collection-s3_bucket?ref=1.0.0"
 
-  naming_prefix     = var.naming_prefix
   enable_versioning = true
 }
 
 module "producer_role" {
-  source = "git::https://github.com/nexient-llc/tf-aws-wrapper_module-iam_assumable_role.git?ref=0.1.0"
+  source = "git::https://github.com/launchbynttdata/tf-aws-module_collection-iam_assumable_role?ref=1.0.1"
 
-  naming_prefix      = var.naming_prefix
   environment        = var.environment
   environment_number = var.environment_number
   region             = var.region
@@ -104,9 +103,8 @@ data "aws_iam_policy_document" "producer_policy" {
 }
 
 module "consumer_role" {
-  source = "git::https://github.com/nexient-llc/tf-aws-wrapper_module-iam_assumable_role.git?ref=0.1.0"
+  source = "git::https://github.com/launchbynttdata/tf-aws-module_collection-iam_assumable_role?ref=1.0.1"
 
-  naming_prefix      = var.naming_prefix
   environment        = var.environment
   environment_number = var.environment_number
   region             = var.region

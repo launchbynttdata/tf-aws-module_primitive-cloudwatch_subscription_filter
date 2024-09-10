@@ -15,7 +15,6 @@ import (
 )
 
 func TestCloudwatchSubscriptionFilterComplete(t *testing.T, ctx types.TestContext) {
-	//varsFile := ctx.TestConfigFolderName() + "/" + ctx.CurrentTestName() + "/" + ctx.TestConfigFileName()
 	logGroupName := terraform.Output(t, ctx.TerratestTerraformOptions(), "cloudwatch_log_group_name")
 	filterName := terraform.Output(t, ctx.TerratestTerraformOptions(), "cloudwatch_log_subscription_filter_name")
 	filterDestinationArn := terraform.Output(t, ctx.TerratestTerraformOptions(), "cloudwatch_log_subscription_filter_destination_arn")
@@ -24,7 +23,6 @@ func TestCloudwatchSubscriptionFilterComplete(t *testing.T, ctx types.TestContex
 	var filter awstypes.SubscriptionFilter
 
 	t.Run("TestFilterExists", func(t *testing.T) {
-		//terraform.GetAllVariablesFromVarFile(t, varsFile, &)
 		filters, err := cloudwatchlogsClient.DescribeSubscriptionFilters(context.TODO(), &cloudwatchlogs.DescribeSubscriptionFiltersInput{
 			LogGroupName: &logGroupName,
 		})
@@ -48,8 +46,8 @@ func TestCloudwatchSubscriptionFilterComplete(t *testing.T, ctx types.TestContex
 }
 
 func GetAWSCloudwatchlogsClient(t *testing.T) *cloudwatchlogs.Client {
-	ecrClient := cloudwatchlogs.NewFromConfig(GetAWSConfig(t))
-	return ecrClient
+	client := cloudwatchlogs.NewFromConfig(GetAWSConfig(t))
+	return client
 }
 
 func GetAWSConfig(t *testing.T) (cfg aws.Config) {

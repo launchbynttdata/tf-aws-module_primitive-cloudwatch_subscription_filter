@@ -133,7 +133,7 @@ data "aws_iam_policy_document" "consumer_policy" {
       "s3:PutObject"
     ]
     resources = [
-      "${module.s3_bucket.arn}",
+      module.s3_bucket.arn,
       "${module.s3_bucket.arn}/*"
     ]
   }

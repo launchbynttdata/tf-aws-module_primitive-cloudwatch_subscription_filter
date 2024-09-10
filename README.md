@@ -109,14 +109,14 @@ If `make check` target is successful, developer is good to commit the code to pr
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0, <= 1.5.5 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.57.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.22.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.66.0 |
 
 ## Modules
 
@@ -140,5 +140,13 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_destination_arn"></a> [destination\_arn](#output\_destination\_arn) | The ARN of the destination to deliver matching log events to |
+| <a name="output_distribution"></a> [distribution](#output\_distribution) | The method used to distribute log data to the destination |
+| <a name="output_filter_pattern"></a> [filter\_pattern](#output\_filter\_pattern) | A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events |
+| <a name="output_id"></a> [id](#output\_id) | The unique ID of the subscription filter |
+| <a name="output_log_group_name"></a> [log\_group\_name](#output\_log\_group\_name) | The name of the log group to associate the subscription filter with |
+| <a name="output_name"></a> [name](#output\_name) | A name for the subscription filter |
+| <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | The ARN of an IAM role that grants CloudWatch Logs permissions to deliver ingested log events to the destination |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

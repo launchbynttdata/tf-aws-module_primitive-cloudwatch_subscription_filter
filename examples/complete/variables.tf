@@ -60,6 +60,7 @@ variable "resource_number" {
 
 variable "region" {
   description = "AWS Region in which the infra needs to be provisioned"
+  type        = string
   default     = "us-east-2"
 }
 
@@ -81,7 +82,7 @@ variable "resource_names_map" {
       max_length = 63
     }
     subscription_filter = {
-      name       = "sub-fltr"
+      name       = "subfltr"
       max_length = 63
     }
     delivery_stream = {
@@ -89,19 +90,19 @@ variable "resource_names_map" {
       max_length = 63
     }
     producer_role = {
-      name       = "prdcr-role"
+      name       = "prdcrrole"
       max_length = 63
     }
     producer_policy = {
-      name       = "prdcr-plcy"
+      name       = "prdcrplcy"
       max_length = 63
     }
     consumer_policy = {
-      name       = "cnsmr-plcy"
+      name       = "cnsmrplcy"
       max_length = 60
     }
     consumer_role = {
-      name       = "cnsmr-role"
+      name       = "cnsmrrole"
       max_length = 60
     }
   }
@@ -119,12 +120,6 @@ variable "producer_trusted_service" {
   default     = null
 }
 
-variable "producer_policy_json" {
-  description = "Policy JSON containing rights for the producer role. If not specified, will build a producer policy for CloudWatch Logs."
-  type        = string
-  default     = null
-}
-
 variable "consumer_trusted_services" {
   description = "Trusted service used for the assumption policy when creating the consumer role. Defaults to the firehose service."
   type        = string
@@ -135,12 +130,6 @@ variable "consumer_external_id" {
   description = "STS External ID used for the assumption policy when creating the consumer role. Defaults to the current AWS account ID."
   type        = string
   default     = null
-}
-
-variable "tags" {
-  type        = map(string)
-  default     = {}
-  description = "A map of tags to add to the resources created by the module."
 }
 
 variable "http_endpoint_url" {
@@ -157,28 +146,4 @@ variable "s3_error_prefix" {
   description = "Prefix to prepend to failed records being sent to S3. Ensure this value contains a trailing slash if set to anything other than an empty string."
   type        = string
   default     = ""
-}
-
-variable "subscription_filter_name" {
-  description = "Name of the subscription filter to attach to this Log Group. Required if create_subscription_filter is true."
-  type        = string
-  default     = null
-}
-
-variable "subscription_filter_role_arn" {
-  type        = string
-  default     = null
-  description = "Role ARN to attach to the subscription filter. This role should have permissions to PutRecord and PutRecordBatch on the delivery stream."
-}
-
-variable "subscription_filter_delivery_stream_arn" {
-  type        = string
-  default     = null
-  description = "ARN of the Delivery Stream used as a target for this Log Group's records."
-}
-
-variable "subscription_filter_pattern" {
-  type        = string
-  default     = ""
-  description = "Filter expression used to filter records coming out of the Log Group. The default (empty string) will send all log records."
 }

@@ -14,7 +14,7 @@ data "aws_caller_identity" "current" {}
 
 module "resource_names" {
   source  = "terraform.registry.launch.nttdata.com/module_library/resource_name/launch"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   for_each = var.resource_names_map
 
@@ -38,13 +38,15 @@ module "cloudwatch_log_subscription_filter" {
 }
 
 module "cloudwatch_log_group" {
-  source = "git::https://github.com/launchbynttdata/tf-aws-module_primitive-cloudwatch_log_group?ref=1.0.1"
+  source  = "terraform.registry.launch.nttdata.com/module_primitive/cloudwatch_log_group/aws"
+  version = "~> 2.0"
 
   name = module.resource_names["log_group"].standard
 }
 
 module "cloudwatch_log_stream" {
-  source = "git::https://github.com/launchbynttdata/tf-aws-module_primitive-cloudwatch_log_stream?ref=1.0.1"
+  source  = "terraform.registry.launch.nttdata.com/module_primitive/cloudwatch_log_stream/aws"
+  version = "~> 2.0"
 
   name                      = module.resource_names["log_stream"].standard
   cloudwatch_log_group_name = module.resource_names["log_group"].standard
@@ -52,7 +54,8 @@ module "cloudwatch_log_stream" {
 }
 
 module "firehose_delivery_stream" {
-  source = "git::https://github.com/launchbynttdata/tf-aws-module_primitive-firehose_delivery_stream?ref=1.1.0"
+  source  = "terraform.registry.launch.nttdata.com/module_primitive/firehose_delivery_stream/aws"
+  version = "~> 1.1"
 
   delivery_stream_name   = module.resource_names["delivery_stream"].standard
   http_endpoint_url      = var.http_endpoint_url
@@ -65,13 +68,15 @@ module "firehose_delivery_stream" {
 }
 
 module "s3_bucket" {
-  source = "git::https://github.com/launchbynttdata/tf-aws-module_collection-s3_bucket?ref=1.0.0"
+  source  = "terraform.registry.launch.nttdata.com/module_collection/s3_bucket/aws"
+  version = "~> 1.1"
 
   enable_versioning = true
 }
 
 module "producer_role" {
-  source = "git::https://github.com/launchbynttdata/tf-aws-module_collection-iam_assumable_role?ref=1.0.1"
+  source  = "terraform.registry.launch.nttdata.com/module_collection/iam_assumable_role/aws"
+  version = "~> 1.1"
 
   environment        = var.environment
   environment_number = var.environment_number
@@ -103,7 +108,8 @@ data "aws_iam_policy_document" "producer_policy" {
 }
 
 module "consumer_role" {
-  source = "git::https://github.com/launchbynttdata/tf-aws-module_collection-iam_assumable_role?ref=1.0.1"
+  source  = "terraform.registry.launch.nttdata.com/module_collection/iam_assumable_role/aws"
+  version = "~> 1.1"
 
   environment        = var.environment
   environment_number = var.environment_number

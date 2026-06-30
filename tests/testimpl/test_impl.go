@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCloudwatchSubscriptionFilterComplete(t *testing.T, ctx types.TestContext) {
+func TestComposableComplete(t *testing.T, ctx types.TestContext) {
 	logGroupName := terraform.Output(t, ctx.TerratestTerraformOptions(), "cloudwatch_log_group_name")
 	filterName := terraform.Output(t, ctx.TerratestTerraformOptions(), "cloudwatch_log_subscription_filter_name")
 	filterDestinationArn := terraform.Output(t, ctx.TerratestTerraformOptions(), "cloudwatch_log_subscription_filter_destination_arn")

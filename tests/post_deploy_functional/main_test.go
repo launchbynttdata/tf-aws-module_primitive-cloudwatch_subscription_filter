@@ -33,5 +33,5 @@ func TestCloudwatchSubscriptionFilterModule(t *testing.T) {
 		SetTestConfigFileName(infraTFVarFileNameDefault).
 		Build()
 
-	lib.RunSetupTestTeardown(t, *ctx, testimpl.TestCloudwatchSubscriptionFilterComplete)
+	lib.RunSetupTestTeardown(t, *ctx, testimpl.TestComposableComplete)
 }

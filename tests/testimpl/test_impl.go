@@ -15,10 +15,10 @@ import (
 )
 
 func TestComposableComplete(t *testing.T, ctx types.TestContext) {
-	logGroupName := terraform.Output(t, ctx.TerratestTerraformOptions(), "cloudwatch_log_group_name")
-	filterName := terraform.Output(t, ctx.TerratestTerraformOptions(), "cloudwatch_log_subscription_filter_name")
-	filterDestinationArn := terraform.Output(t, ctx.TerratestTerraformOptions(), "cloudwatch_log_subscription_filter_destination_arn")
-	firehoseDeliveryStreamArn := terraform.Output(t, ctx.TerratestTerraformOptions(), "firehose_delivery_stream_arn")
+	logGroupName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "cloudwatch_log_group_name")
+	filterName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "cloudwatch_log_subscription_filter_name")
+	filterDestinationArn := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "cloudwatch_log_subscription_filter_destination_arn")
+	firehoseDeliveryStreamArn := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "firehose_delivery_stream_arn")
 	cloudwatchlogsClient := GetAWSCloudwatchlogsClient(t)
 	var filter awstypes.SubscriptionFilter
 
